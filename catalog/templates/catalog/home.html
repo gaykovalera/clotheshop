@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+<body>
+
+{% for c in categories %}
+    <div>
+    <a href="{% url 'catalog:category_view' c.slug %}">{{ c.name }}</a>
+    </div>
+{% endfor %}
+
+</body>
+</html>
+
+
+
+
+    <title>Addon</title>
+</head>
+<body>
+
+{% for c in addon  %}
+    <div>
+    <a href="{% url 'catalog:addon_view' c.slug %}">{{ c.name }}</a>
+    </div>
+{% endfor %}
+</body>
+</html>
