@@ -8,7 +8,7 @@
 
 {% for c in product %}
     <div>
-    <a href="{% url 'catalog:product_view' c.slug %}">{{ c.name }}</a>
+    <a href="{% url 'catalog:product_view' brand.slug category.slug product.slug %}">{{ c.name }}</a>
     </div>
 {% endfor %}
 </body>

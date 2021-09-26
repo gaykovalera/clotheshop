@@ -4,11 +4,11 @@ from django.shortcuts import render, get_object_or_404
 from catalog.models import Category, Product, Addon, Brand
 
 
-def brand_name(request):
+def home(request):
     br = Brand.objects.all()
     return render(
         request,
-        'catalog/brand.html',
+        'catalog/home.html',
         {"brand": br}
     )
 
@@ -19,16 +19,16 @@ def brand_view(request, brand_slug):
     return HttpResponse(br.name)
 
 
-def home(request):
+def categories(request):
     cat = Category.objects.all()
     return render(
         request,
-        'catalog/home.html',
+        'catalog/categories.html',
         {"categories": cat}
     )
 
 
-def category_view(request, category_slug):
+def category_view(request, brand_slug, category_slug):
     cat = get_object_or_404(Category, slug=category_slug)
     Category.objects.filter(slug=category_slug)
     return HttpResponse(cat.name)
@@ -43,7 +43,7 @@ def productname(request):
     )
 
 
-def product_view(request, product_slug):
+def product_view(request, brand_slug, category_slug, product_slug):
     pro = get_object_or_404(Product, slug=product_slug)
     return HttpResponse(pro.name)
 

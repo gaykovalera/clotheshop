@@ -19,12 +19,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
 
-from catalog.views import home, productname, add
+from catalog.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')),
-    path('', home),
-    # path('product', productname),
-    # path('addon', add)
+    path('', home)
 ]

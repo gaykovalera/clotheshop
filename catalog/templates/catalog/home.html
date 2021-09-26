@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Categories</title>
+    <title>Brand</title>
 </head>
 <body>
 
-{% for c in categories %}
+
+{% for c in brand  %}
     <div>
-    <a href="{% url 'catalog:category_view' c.slug %}">{{ c.name }}, {{ c.description }}</a>
+    <a href="{% url 'catalog:brand_view' brand.slug %}">{{ c.name }}</a>
     </div>
 {% endfor %}
 
@@ -18,14 +19,3 @@
 
 
 
-    <title>Addon</title>
-</head>
-<body>
-
-{% for c in addon  %}
-    <div>
-    <a href="{% url 'catalog:addon_view' c.slug %}">{{ c.name }}</a>
-    </div>
-{% endfor %}
-</body>
-</html>
