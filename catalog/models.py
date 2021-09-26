@@ -5,8 +5,6 @@ class Brand(models.Model):
     name = models.CharField(max_length=32, verbose_name='Наименование')
     slug = models.SlugField(max_length=32, unique=True)
 
-    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
-
     def __str__(self):
         return self.name
 

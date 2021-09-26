@@ -8,7 +8,7 @@
 
 {% for c in categories %}
     <div>
-    <a href="{% url 'catalog:category_view' c.slug %}">{{ c.name }}</a>
+    <a href="{% url 'catalog:category_view' c.slug %}">{{ c.name }}, {{ c.description }}</a>
     </div>
 {% endfor %}
 

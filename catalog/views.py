@@ -1,7 +1,22 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Category, Product, Addon, Brand
+
+
+def brand_name(request):
+    br = Brand.objects.all()
+    return render(
+        request,
+        'catalog/brand.html',
+        {"brand": br}
+    )
+
+
+def brand_view(request, brand_slug):
+    br = get_object_or_404(Brand, slug=brand_slug)
+    Category.objects.filter(product__brand__slug=brand_slug)
+    return HttpResponse(br.name)
 
 
 def home(request):
@@ -15,6 +30,7 @@ def home(request):
 
 def category_view(request, category_slug):
     cat = get_object_or_404(Category, slug=category_slug)
+    Category.objects.filter(slug=category_slug)
     return HttpResponse(cat.name)
 
 
@@ -54,18 +70,7 @@ def addon_view(request, addon_slug):
     return HttpResponse(on.name)
 
 
-def brand_name(request):
-    br = Brand.objects.all()
-    return render(
-        request,
-        'catalog/brand.html',
-        {"brand": br}
-    )
 
-
-def brand_view(request, brand_slug):
-    br = get_object_or_404(Brand, slug=brand_slug)
-    return HttpResponse(br.name)
 
 
 

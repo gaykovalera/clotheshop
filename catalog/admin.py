@@ -16,3 +16,8 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(models.Addon)
 class AddonAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.Brand)
+class BrandAdmin(admin.ModelAdmin):
+    pass
