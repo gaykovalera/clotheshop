@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Addon</title>
+</head>
+<body>
+
+{% for c in addon  %}
+    <div>
+    <a href="{% url 'catalog:addon_view' addon.slug %}">{{ c.name }}</a>
+    </div>
+{% endfor %}
+</body>
+</html>
