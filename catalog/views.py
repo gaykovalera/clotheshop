@@ -9,65 +9,52 @@ def home(request):
     return render(
         request,
         'catalog/home.html',
-        {"brand": br}
+        {"brands": br}
     )
 
 
 def brand_view(request, brand_slug):
     br = get_object_or_404(Brand, slug=brand_slug)
-    Category.objects.filter(product__brand__slug=brand_slug)
-    return HttpResponse(br.name)
-
-
-def categories(request):
-    cat = Category.objects.all()
+    cats = Category.objects.filter(product__brand__slug=brand_slug)
     return render(
         request,
-        'catalog/categories.html',
-        {"categories": cat}
+        'catalog/brand.html',
+        {"brands": br,
+         "categories": cats}
     )
 
 
 def category_view(request, brand_slug, category_slug):
     cat = get_object_or_404(Category, slug=category_slug)
-    Category.objects.filter(slug=category_slug)
-    return HttpResponse(cat.name)
-
-
-def productname(request):
-    pro = Product.objects.all()
+    pro = Category.objects.filter(slug=category_slug)
     return render(
         request,
-        'catalog/productname.html',
-        {"product": pro}
+        'catalog/categories.html',
+        {"categories": cat,
+         "products": pro}
     )
 
 
 def product_view(request, brand_slug, category_slug, product_slug):
-    pro = get_object_or_404(Product, slug=product_slug)
-    return HttpResponse(pro.name)
-
-
-def products_view(request, category_slug):
-    cat = Category.objects.prefetch_related("product_set").get(slug=category_slug)
+    cat = get_object_or_404(Product, slug=product_slug)
+    pro = Category.objects.prefetch_related("product_set").get(slug=category_slug)
     return render(
-        request, 'catalog/home.html',
-        {"category": cat}
+        request, 'catalog/products1.html',
+        {"categories": cat,
+         "products": pro}
     )
 
 
-def add(request):
-    on = Addon.objects.all()
+def addon_view(request, brand_slug, category_slug, product_slug, addon_slug):
+    on = get_object_or_404(Addon, slug=addon_slug)
+    ad = Addon.objects.filter(Addon, slug=addon_slug)
     return render(
         request,
         'catalog/add.html',
-        {"addon": on}
+        {"addon": on,
+         "addons": ad}
     )
 
-
-def addon_view(request, addon_slug):
-    on = get_object_or_404(Addon, slug=addon_slug)
-    return HttpResponse(on.name)
 
 
 
