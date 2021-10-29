@@ -6,8 +6,10 @@
 </head>
 <body>
 
-{% for c in products %}
+{% for c in addons %}
     <div>
-    <a href="{% url 'catalog:product_view' brand.slug category.slug c.slug %}">{{ c.name }}</a>
+    <a href="{% url 'catalog:addon_view' brand.slug category.slug product.slug c.slug %}">{{ c.name }}</a>
     </div>
 {% endfor %}
+
+

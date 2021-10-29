@@ -1,4 +1,10 @@
+import os
+import uuid
+
 from django.db import models
+from django.urls import reverse
+
+from catalog.validators import validate_product
 
 
 class Brand(models.Model):
@@ -7,6 +13,9 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('catalog:brand_view', kwargs={'brand_slug': self.slug})
 
 
 class Category(models.Model):
@@ -20,6 +29,12 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse(
+            'catalog:category_view',
+            kwargs={'brand_slug': self.brand.slug, 'category_slug': self.slug}
+        )
 
 
 class Product(models.Model):
@@ -39,6 +54,32 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse(
+            'catalog:product_view',
+            kwargs={'brand_slug': self.brand.slug, 'category_slug': self.category.slug,
+                    'product_slug': self.slug}
+        )
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='products',
+        null=True,
+        blank=True,
+        validators=[validate_product]
+    )
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete()
+        super().delete(*args, **kwargs)
+
+    def __str__(self):
+        return f'Изображение для {self.product.name}'
 
 
 class Addon(models.Model):

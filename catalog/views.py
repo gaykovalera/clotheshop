@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Category, Product, Addon, Brand
@@ -19,29 +20,31 @@ def brand_view(request, brand_slug):
     return render(
         request,
         'catalog/brand.html',
-        {"brands": br,
+        {"brand": br,
          "categories": cats}
     )
 
 
 def category_view(request, brand_slug, category_slug):
     cat = get_object_or_404(Category, slug=category_slug)
-    pro = Category.objects.filter(slug=category_slug)
+    br = get_object_or_404(Brand, slug=brand_slug)
+    pro = Product.objects.filter(category__slug=category_slug)
     return render(
         request,
         'catalog/categories.html',
-        {"categories": cat,
+        {"category": cat,
+         "brand": br,
          "products": pro}
     )
 
 
 def product_view(request, brand_slug, category_slug, product_slug):
-    cat = get_object_or_404(Product, slug=product_slug)
-    pro = Category.objects.prefetch_related("product_set").get(slug=category_slug)
+    product = get_object_or_404(Product, slug=product_slug)
+    cat = Category.objects.prefetch_related("product_set").get(slug=category_slug)
     return render(
         request, 'catalog/products1.html',
-        {"categories": cat,
-         "products": pro}
+        {"product": product,
+         "category": cat}
     )
 
 

@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Brand</title>
+    <title>Categories</title>
 </head>
 <body>
 {% for c in categories %}
     <div>
-    <a href="{% url 'catalog:brand_view' c.slug %}">{{ c.name }}</a>
+    <a href="{% url 'catalog:category_view' brand.slug c.slug %}">{{ c.name }}</a>
     </div>
 {% endfor %}
 </body>

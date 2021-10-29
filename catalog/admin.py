@@ -3,9 +3,16 @@ from django.contrib import admin
 from . import models
 
 
+class ProductImageInLine(admin.TabularInline):
+    model = models.ProductImage
+    extra = 0
+    max_num = 3
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'category']
+    inlines = [ProductImageInLine]
 
 
 @admin.register(models.Category)

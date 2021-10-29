@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 3d party
+    'django_extensions',
+    'widget_tweaks',
     # internal
     'authentication.apps.AuthenticationConfig',
     'catalog.apps.CatalogConfig'
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'clotheshop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR.joinpath('templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -104,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL  = 'authentication.User'
+AUTH_USER_MODEL = 'authentication.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -124,6 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR.joinpath('assets', 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR.joinpath('assets', 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

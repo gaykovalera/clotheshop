@@ -2,13 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Categories</title>
+    <title>Products</title>
 </head>
 <body>
-{% for c in categories %}
+{% for c in category.product_set.all %}
     <div>
-    <a href="{% url 'catalog:category_view' brand.slug c.slug %}">{{ c.name }}</a>
+    <a href="{% url 'catalog:product_view' brand.slug category.slug c.slug %}">{{ c.name }} </a>
+    <br>
+    {{ c.description }}
+    <br>
     </div>
 {% endfor %}
+
+{% if product.productimage_set.all %}
+    {% for product_image in product.productimage_set.all %}
+    <div>
+        <img class="product-image" src="{{ product.image }}" alt="{{ product.name }}">
+    </div>
+    {% endfor %}
+{% endif %}
 </body>
 </html>
