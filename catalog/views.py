@@ -4,48 +4,69 @@ from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Category, Product, Addon, Brand
 
+from cart.forms import CartAddProductForm
+
 
 def home(request):
-    br = Brand.objects.all()
+    brands = Brand.objects.all()
     return render(
         request,
         'catalog/home.html',
-        {"brands": br}
+        {"brands": brands}
     )
 
 
 def brand_view(request, brand_slug):
-    br = get_object_or_404(Brand, slug=brand_slug)
-    cats = Category.objects.filter(product__brand__slug=brand_slug)
+    brand = get_object_or_404(Brand, slug=brand_slug)
+    categories = Category.objects.filter(product__brand__slug=brand_slug).distinct()
     return render(
         request,
         'catalog/brand.html',
-        {"brand": br,
-         "categories": cats}
+        {"brand": brand,
+         "categories": categories}
     )
 
 
 def category_view(request, brand_slug, category_slug):
-    cat = get_object_or_404(Category, slug=category_slug)
-    br = get_object_or_404(Brand, slug=brand_slug)
-    pro = Product.objects.filter(category__slug=category_slug)
+    category = get_object_or_404(Category, slug=category_slug)
+    brand = get_object_or_404(Brand, slug=brand_slug)
+    products = Product.objects.filter(category__slug=category_slug)
     return render(
         request,
         'catalog/categories.html',
-        {"category": cat,
-         "brand": br,
-         "products": pro}
+        {"category": category,
+         "brand": brand,
+         "products": products}
     )
+
+
+#Добавить типизацию + prefetch_related для картинок:
 
 
 def product_view(request, brand_slug, category_slug, product_slug):
-    product = get_object_or_404(Product, slug=product_slug)
-    cat = Category.objects.prefetch_related("product_set").get(slug=category_slug)
+    brand = get_object_or_404(Brand, slug=brand_slug)
+    pro = get_object_or_404(Product, slug=product_slug)
+    category = get_object_or_404(Category, slug=category_slug)
+    product = Category.objects.prefetch_related("product_set").get(slug=category_slug)
+    products = Product.objects.filter(slug=product_slug)
     return render(
         request, 'catalog/products1.html',
-        {"product": product,
-         "category": cat}
+        {"pro": pro,
+         "product": product,
+         "products": products,
+         "brand": brand,
+         "category": category}
     )
+
+
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product,
+                                id=id,
+                                slug=slug,
+                                available=True)
+    cart_product_form = CartAddProductForm()
+    return render(request, 'catalog/products1.html', {'product': product,
+                                                        'cart_product_form': cart_product_form})
 
 
 def addon_view(request, brand_slug, category_slug, product_slug, addon_slug):

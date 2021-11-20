@@ -8,7 +8,14 @@
 {% for c in categories %}
     <div>
     <a href="{% url 'catalog:category_view' brand.slug c.slug %}">{{ c.name }}</a>
+    {% if c.productimage_set.all %}
+        {% for product_image in c.productimage_set.all %}
+        <br>
+        <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.description }}">
+        <br>
     </div>
+        {% endfor %}
+    {% endif %}
 {% endfor %}
 </body>
 </html>

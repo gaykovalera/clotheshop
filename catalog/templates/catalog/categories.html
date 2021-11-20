@@ -7,19 +7,17 @@
 <body>
 {% for c in category.product_set.all %}
     <div>
-    <a href="{% url 'catalog:product_view' brand.slug category.slug c.slug %}">{{ c.name }} </a>
-    <br>
-    {{ c.description }}
-    <br>
+        <a href="{% url 'catalog:product_view' brand.slug category.slug c.slug %}">{{ c.name }} </a>
+    {% if c.productimage_set.all %}
+        {% for product_image in c.productimage_set.all %}
+        <br>
+        <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.name }}" >
+        <br>
     </div>
+        {% endfor %}
+    {% endif %}
 {% endfor %}
 
-{% if product.productimage_set.all %}
-    {% for product_image in product.productimage_set.all %}
-    <div>
-        <img class="product-image" src="{{ product.image }}" alt="{{ product.name }}">
-    </div>
-    {% endfor %}
-{% endif %}
-</body>
-</html>
+
+
+

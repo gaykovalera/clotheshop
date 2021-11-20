@@ -3,6 +3,17 @@ from django.contrib import admin
 from . import models
 
 
+class BrandImageInLine(admin.TabularInline):
+    model = models.BrandImage
+    extra = 0
+    max_num = 3
+
+
+@admin.register(models.Brand)
+class BrandAdmin(admin.ModelAdmin):
+    inlines = [BrandImageInLine]
+
+
 class ProductImageInLine(admin.TabularInline):
     model = models.ProductImage
     extra = 0
@@ -24,7 +35,3 @@ class CategoryAdmin(admin.ModelAdmin):
 class AddonAdmin(admin.ModelAdmin):
     pass
 
-
-@admin.register(models.Brand)
-class BrandAdmin(admin.ModelAdmin):
-    pass
