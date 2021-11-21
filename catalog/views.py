@@ -49,24 +49,16 @@ def product_view(request, brand_slug, category_slug, product_slug):
     category = get_object_or_404(Category, slug=category_slug)
     product = Category.objects.prefetch_related("product_set").get(slug=category_slug)
     products = Product.objects.filter(slug=product_slug)
+    cart_product_form = CartAddProductForm()
     return render(
         request, 'catalog/products1.html',
         {"pro": pro,
          "product": product,
          "products": products,
          "brand": brand,
-         "category": category}
+         "category": category,
+         'cart_product_form': cart_product_form}
     )
-
-
-def product_detail(request, id, slug):
-    product = get_object_or_404(Product,
-                                id=id,
-                                slug=slug,
-                                available=True)
-    cart_product_form = CartAddProductForm()
-    return render(request, 'catalog/products1.html', {'product': product,
-                                                        'cart_product_form': cart_product_form})
 
 
 def addon_view(request, brand_slug, category_slug, product_slug, addon_slug):
