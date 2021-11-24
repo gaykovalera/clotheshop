@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+</head>
+<body>
+
+{% for c in products %}
+    <div>
+        <a href="{% url 'catalog:product_view' brand.slug category.slug  c.slug %}">{{ c.name }}
+        <br>
+        {{ c.description }}</a>
+        <br>
+<p class="price">{{ c.price }} бел.р.</p>
+<form action="{% url "cart:cart_add" c.id %}" method="post">
+    {{ cart_product_form }}
+    {% csrf_token %}
+    <input type="submit" value="Добавить в корзину">
+    {% if c.productimage_set.all %}
+        {% for product_image in c.productimage_set.all %}
+        <br>
+        <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.description }}">
+</form>
+    </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

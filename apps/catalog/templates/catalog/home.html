@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brand</title>
+</head>
+<body>
+
+
+{% for c in brands  %}
+    {% if c.brandimage_set.all %}
+        {% for brand_image in c.brandimage_set.all %}
+        <div>
+        <a href="{% url 'catalog:brand_view' c.slug %}">{{ c.name }}</a>
+            <br>
+        <img class="brand-image" src="{{ brand_image.image.url }}" alt="{{ c.name }}">
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% endblock %}
+
+</body>
+</html>
+
+
+
+

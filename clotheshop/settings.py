@@ -38,13 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cart',
+    'apps.cart',
     # 3d party
     'django_extensions',
     'widget_tweaks',
     # internal
-    'authentication.apps.AuthenticationConfig',
-    'catalog.apps.CatalogConfig'
+    'apps.authentication.apps.AuthenticationConfig',
+    'apps.catalog.apps.CatalogConfig'
 ]
 
 MIDDLEWARE = [
@@ -71,7 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processors.cart',
+                'apps.cart.context_processors.cart',
+                'apps.catalog.context_processors.nav_items_processors',
             ],
         },
     },
