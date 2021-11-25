@@ -12,14 +12,15 @@
 <ul>
     {% for item in nav_items %}
         <li>
-            <a href="{% url 'catalog:category_view' brand.slug item.slug %}">{{  item.name }}
-            </a>
+            <a href="{% url 'catalog:main_category_view' item.slug %}">{{  item.name }}</a>
         </li>
     {% endfor %}
 </ul>
-
+<div>
 {% if request.user.is_authenticated %}
-    <p>{{ request.user.username }}</p>
+    <div>
+        <span> {{ request.user.username }} </span>
+    </div>
 {% else %}
     <div>
     <a href="{% url 'authentication:login' %}">Войти</a>

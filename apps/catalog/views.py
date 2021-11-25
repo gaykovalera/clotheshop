@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from apps.catalog.models import Category, Product, Addon, Brand
+from apps.catalog.models import Category, MainCategory, Product, Addon, Brand
 
 from apps.cart.forms import CartAddProductForm
 
@@ -39,6 +39,17 @@ def category_view(request, brand_slug, category_slug):
          "products": products}
     )
 
+
+def main_category_view(request, category_slug, main_category_slug):
+    main_category = get_object_or_404(MainCategory, slug=main_category_slug)
+    products = Product.objects.filter(category__main_category__slug=main_category_slug)
+    return render(
+        request,
+        'catalog/main_cat.html',
+        {
+         "products": products,
+         "main_category": main_category}
+    )
 
 
 #Добавить типизацию + prefetch_related для картинок:

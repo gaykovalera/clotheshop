@@ -38,6 +38,7 @@ class Category(models.Model):
     name = models.CharField(max_length=32, verbose_name='Наименование')
     description = models.TextField(max_length=260, verbose_name='Описание')
     slug = models.SlugField(max_length=32, unique=True)
+    main_category = models.ForeignKey("MainCategory", on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Категория'
@@ -53,6 +54,18 @@ class Category(models.Model):
         )
 
 
+class MainCategory(models.Model):
+    name = models.CharField(max_length=32, verbose_name='Наименование')
+    slug = models.SlugField(max_length=32, unique=True)
+
+    class Meta:
+        verbose_name = 'Основная категория'
+        verbose_name_plural = 'Основные категории'
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=32, verbose_name='Наименование')
     description = models.TextField(max_length=260, verbose_name='Описание')
@@ -62,7 +75,7 @@ class Product(models.Model):
 
     category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
     addon = models.ManyToManyField("Addon", blank=True)
-    brand = models.ManyToManyField("Brand", blank=True)
+    brand = models.ForeignKey("Brand", on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Товар'

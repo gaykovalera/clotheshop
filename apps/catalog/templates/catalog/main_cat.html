@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все бренды</title>
+</head>
+<body>
+{% for c in products %}
+    <div>
+        <a href="{% url 'catalog:main_category_view' c.slug %}">{{ c.name }}</a>
+            <br>
+            {{ c.price }} бел.р.
+            <br>
+    {% if c.productimage_set.all %}
+        {% for product_image in c.productimage_set.all %}
+        <br>
+        <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.name }}" >
+        <br>
+    </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+{% for c in products %}
+    <div>
+        <a href="{% url 'catalog:product_view' c.brand.slug c.category.slug c.slug %}">{{ c.name }}</a>
+            <br>
+            {{ c.price }} бел.р.
+            <br>
+    {% if c.productimage_set.all %}
+        {% for product_image in c.productimage_set.all %}
+        <br>
+        <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.name }}" >
+        <br>
+    </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% endblock %}
