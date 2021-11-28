@@ -46,14 +46,16 @@ def login(request):
                 password=form.cleaned_data['password']
             )
             if user:
+                redirect_url = request.GET.get('next') or reverse('catalog:home')
                 login_user(request, user)
-                return redirect(reverse('catalog:home'))
+                return redirect(redirect_url)
     else:
         form = LoginForm()
+    next_url = request.GET.get('next', '')
     return render(
         request,
         'authentication/login.html',
-        {'form': form}
+        {'form': form, 'next': next_url}
     )
 
 

@@ -40,14 +40,13 @@ def category_view(request, brand_slug, category_slug):
     )
 
 
-def main_category_view(request, category_slug, main_category_slug):
+def main_category_view(request, main_category_slug):
     main_category = get_object_or_404(MainCategory, slug=main_category_slug)
     products = Product.objects.filter(category__main_category__slug=main_category_slug)
     return render(
         request,
         'catalog/main_cat.html',
-        {
-         "products": products,
+        {"products": products,
          "main_category": main_category}
     )
 

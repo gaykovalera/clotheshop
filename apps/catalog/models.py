@@ -66,6 +66,7 @@ class MainCategory(models.Model):
         return self.name
 
 
+
 class Product(models.Model):
     name = models.CharField(max_length=32, verbose_name='Наименование')
     description = models.TextField(max_length=260, verbose_name='Описание')

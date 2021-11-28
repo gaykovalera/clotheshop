@@ -17,9 +17,12 @@
     {% endfor %}
 </ul>
 <div>
-{% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
     <div>
         <span> {{ request.user.username }} </span>
+        {% if user.avatar %}
+         <img src="{{ user.avatar.url }}" height="25" width="25">
+         {% endif %}
     </div>
 {% else %}
     <div>
