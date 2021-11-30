@@ -1,0 +1,6 @@
+TEST_CATEGORY = {
+  "name": "Топы и майки",
+  "description": "Женские топы и майки",
+  "slug": "tops-and-t-shirts",
+  "main_category": "Одежда",
+}

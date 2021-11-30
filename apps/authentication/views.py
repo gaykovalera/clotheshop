@@ -42,7 +42,8 @@ def login(request):
         if form.is_valid():
             user = authenticate(
                 request,
-                username=form.cleaned_data['username'],
+                username=form.cleaned_data['email_or_username'],
+                email=form.cleaned_data['email_or_username'],
                 password=form.cleaned_data['password']
             )
             if user:

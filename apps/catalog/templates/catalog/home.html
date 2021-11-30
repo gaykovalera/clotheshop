@@ -8,16 +8,24 @@
     <meta charset="UTF-8">
     <title>Brand</title>
 </head>
+<style>
+.thumb img {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+</style>
 <body>
 
 
+<ul class="hr">
 {% for c in brands  %}
     {% if c.brandimage_set.all %}
         {% for brand_image in c.brandimage_set.all %}
         <div>
         <a href="{% url 'catalog:brand_view' c.slug %}">{{ c.name }}</a>
             <br>
-        <img class="brand-image" src="{{ brand_image.image.url }}" alt="{{ c.name }}">
+        <img class="thumb" src="{{ brand_image.image.url }}" width="450" height="250"
+             alt="{{ c.name }}">
         </div>
         {% endfor %}
     {% endif %}

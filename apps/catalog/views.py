@@ -1,3 +1,4 @@
+from django.db.models import Count, Prefetch
 from django.shortcuts import render, get_object_or_404
 
 from apps.catalog.models import Category, MainCategory, Product, Addon, Brand
@@ -16,7 +17,8 @@ def home(request):
 
 def brand_view(request, brand_slug):
     brand = get_object_or_404(Brand, slug=brand_slug)
-    categories = Category.objects.filter(product__brand__slug=brand_slug).distinct()
+    categories = Category.objects.filter(product__brand__slug=brand_slug).\
+        prefetch_related('product_set').distinct()
     products = Product.objects.filter(brand__slug=brand_slug)
     return render(
         request,
@@ -28,9 +30,10 @@ def brand_view(request, brand_slug):
 
 
 def category_view(request, brand_slug, category_slug):
-    category = get_object_or_404(Category, slug=category_slug)
     brand = get_object_or_404(Brand, slug=brand_slug)
+    category = get_object_or_404(Category, slug=category_slug)
     products = Product.objects.filter(category__slug=category_slug)
+    # product_count = Category.objects.filter()
     return render(
         request,
         'catalog/categories.html',

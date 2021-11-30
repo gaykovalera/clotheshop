@@ -11,7 +11,7 @@
 {% for c in categories %}
     <div>
         <a href="{% url 'catalog:category_view' brand.slug c.slug %}">{{ c.name }}
-            ({{ c.products__count }}) </a>
+        ({{ c.product_set.count }})</a>
      </div>
 {% endfor %}
 
@@ -21,7 +21,8 @@
         {% if c.productimage_set.all %}
             {% for product_image in c.productimage_set.all %}
             <br>
-            <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.description }}">
+        <img class="product-image" src="{{ product_image.image.url }}"
+             width="200" height="200" alt= "{{ c.name }}" >
             {% endfor %}
         {% endif %}
     </div>

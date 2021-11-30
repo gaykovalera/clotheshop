@@ -17,7 +17,8 @@
     {% if c.productimage_set.all %}
         {% for product_image in c.productimage_set.all %}
         <br>
-        <img class="product-image" src="{{ product_image.image.url }}" alt="{{ c.name }}" >
+        <img class="product-image" src="{{ product_image.image.url }}"
+             width="200" height="200" alt= "{{ c.name }}" > >
         <br>
     </div>
         {% endfor %}
