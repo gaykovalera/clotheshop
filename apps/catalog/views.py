@@ -41,7 +41,7 @@ def main_category_view(request, main_category_slug):
 def category_view(request, brand_slug, category_slug):
     brand = get_object_or_404(Brand, slug=brand_slug)
     category = get_object_or_404(Category, slug=category_slug)
-    products = Product.objects.filter(brand__slug=brand_slug)
+    products = Product.objects.filter(category__slug=category_slug)
     return render(
         request,
         'catalog/categories.html',
