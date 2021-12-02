@@ -1,7 +1,6 @@
-from django.db.models import Count, Prefetch
 from django.shortcuts import render, get_object_or_404
 
-from apps.catalog.models import Category, MainCategory, Product, Addon, Brand
+from apps.catalog.models import Category, MainCategory, Product, Brand
 
 from apps.cart.forms import CartAddProductForm
 
@@ -17,28 +16,13 @@ def home(request):
 
 def brand_view(request, brand_slug):
     brand = get_object_or_404(Brand, slug=brand_slug)
-    categories = Category.objects.filter(product__brand__slug=brand_slug).\
-        prefetch_related('product_set').distinct()
+    categories = Category.objects.prefetch_related('product_set').filter(product__brand__slug=brand_slug).distinct()
     products = Product.objects.filter(brand__slug=brand_slug)
     return render(
         request,
         'catalog/brand.html',
         {"brand": brand,
          "categories": categories,
-         "products": products}
-    )
-
-
-def category_view(request, brand_slug, category_slug):
-    brand = get_object_or_404(Brand, slug=brand_slug)
-    category = get_object_or_404(Category, slug=category_slug)
-    products = Product.objects.filter(category__slug=category_slug)
-    # product_count = Category.objects.filter()
-    return render(
-        request,
-        'catalog/categories.html',
-        {"category": category,
-         "brand": brand,
          "products": products}
     )
 
@@ -54,15 +38,26 @@ def main_category_view(request, main_category_slug):
     )
 
 
-#Добавить типизацию + prefetch_related для картинок:
+def category_view(request, brand_slug, category_slug):
+    brand = get_object_or_404(Brand, slug=brand_slug)
+    category = get_object_or_404(Category, slug=category_slug)
+    products = Product.objects.filter(brand__slug=brand_slug)
+    return render(
+        request,
+        'catalog/categories.html',
+        {"category": category,
+         "brand": brand,
+         "products": products}
+    )
 
 
 def product_view(request, brand_slug, category_slug, product_slug):
     brand = get_object_or_404(Brand, slug=brand_slug)
     pro = get_object_or_404(Product, slug=product_slug)
     category = get_object_or_404(Category, slug=category_slug)
-    product = Category.objects.prefetch_related("product_set").get(slug=category_slug)
+    product = Category.objects.prefetch_related('product_set').filter(product__brand__slug=brand_slug).distinct()
     products = Product.objects.filter(slug=product_slug)
+    image = Product.objects.prefetch_related("productimage_set")
     cart_product_form = CartAddProductForm()
     return render(
         request, 'catalog/products1.html',
@@ -71,19 +66,12 @@ def product_view(request, brand_slug, category_slug, product_slug):
          "products": products,
          "brand": brand,
          "category": category,
+         "image": image,
          'cart_product_form': cart_product_form}
     )
 
 
-def addon_view(request, brand_slug, category_slug, product_slug, addon_slug):
-    on = get_object_or_404(Addon, slug=addon_slug)
-    ad = Addon.objects.filter(Addon, slug=addon_slug)
-    return render(
-        request,
-        'catalog/add.html',
-        {"addon": on,
-         "addons": ad}
-    )
+
 
 
 

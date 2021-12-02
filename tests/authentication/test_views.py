@@ -22,5 +22,5 @@ class TestRegistrationView(TestCase):
         )
         user = User.objects.get(email='test@test.com')
 
-        # self.assertEqual(response.context['form'], 'test@test.com')
+
 

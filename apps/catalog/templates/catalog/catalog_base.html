@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block styles %}
+    {% load static %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'catalog/../../static/catalog/styles.css' %}">
+{% endblock %}
+

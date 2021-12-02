@@ -66,7 +66,6 @@ class MainCategory(models.Model):
         return self.name
 
 
-
 class Product(models.Model):
     name = models.CharField(max_length=32, verbose_name='Наименование')
     description = models.TextField(max_length=260, verbose_name='Описание')
@@ -75,7 +74,6 @@ class Product(models.Model):
     slug = models.SlugField(max_length=32, unique=True)
 
     category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
-    addon = models.ManyToManyField("Addon", blank=True)
     brand = models.ForeignKey("Brand", on_delete=models.SET_NULL, null=True)
 
     class Meta:
@@ -105,16 +103,7 @@ class ProductImage(models.Model):
         return f'Изображение для {self.product.name}'
 
 
-class Addon(models.Model):
-    name = models.CharField(max_length=32, verbose_name='Наименование')
-    description = models.TextField(max_length=256, verbose_name='Описание')
-    price = models.DecimalField(max_digits=6, decimal_places=1, verbose_name='Цена')
-    slug = models.SlugField(max_length=32, unique=True)
 
-    category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 

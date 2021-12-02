@@ -36,7 +36,5 @@ class MainCategoryAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Addon)
-class AddonAdmin(admin.ModelAdmin):
-    pass
+
 

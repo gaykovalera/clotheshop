@@ -1,13 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'catalog/catalog_base.html' %}
 {% block content %}
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Categories</title>
 </head>
+
 <body>
+
 {% for c in categories %}
     <div>
         <a href="{% url 'catalog:category_view' brand.slug c.slug %}">{{ c.name }}
@@ -15,20 +14,21 @@
      </div>
 {% endfor %}
 
+<ul class="hr">
 {% for c in products %}
-    <div>
+    <li>
         <a href="{% url 'catalog:product_view' brand.slug c.category.slug c.slug %}">{{ c.name }}</a>
+            <br>
+            {{ c.price }} бел.р.
+            <br>
         {% if c.productimage_set.all %}
             {% for product_image in c.productimage_set.all %}
-            <br>
         <img class="product-image" src="{{ product_image.image.url }}"
-             width="200" height="200" alt= "{{ c.name }}" >
+             width="200" height="300" alt= "{{ c.name }}" >
             {% endfor %}
         {% endif %}
-    </div>
+    </li>
 {% endfor %}
-
+</ul>
 {% endblock %}
-
 </body>
-</html>

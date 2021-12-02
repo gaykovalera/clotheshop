@@ -4,14 +4,16 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>{% block title %}Brand mania{% endblock %}</title>
+    {% block styles %}
     <style>
       ul.hr li {
-          display: inline;
-          margin-left: 100px;
+          display: inline-block;
+          margin-left: 150px;
       }
+       a {
+           text-decoration: none;
+       }
     </style>
-    {% block styles %}
-
     {% endblock %}
 </head>
 <body>
@@ -19,10 +21,12 @@
 <ul class="hr">
     {% for item in nav_items %}
         <li>
-            <a href="{% url 'catalog:main_category_view' item.slug %}">{{  item.name }}</a>
+            <a href="{% url 'catalog:main_category_view' item.slug %}">
+                <big>{{ item.name }}</big></a>
         </li>
     {% endfor %}
 </ul>
+<a href="{% url 'catalog:home' %}"> HOME</a>
 <div>
     {% if request.user.is_authenticated %}
     <div>
@@ -36,6 +40,8 @@
     <a href="{% url 'authentication:login' %}">Войти</a>
 {% endif %}
     </div>
+
+
 
 {% block content %}
 {% endblock %}

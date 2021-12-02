@@ -1,29 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'catalog/catalog_base.html'  %}
+
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Все бренды</title>
 </head>
 <body>
+<ul class="hr">
 {% for c in products %}
-    <div>
-        <a href="{% url 'catalog:main_category_view' main_category.slug %}"></a>
+         <a href="{% url 'catalog:main_category_view' main_category.slug %}"></a>
+    <li>
          <a href="{% url 'catalog:product_view' c.brand.slug c.category.slug c.slug %}">{{ c.name }}</a>
             <br>
             {{ c.price }} бел.р.
             <br>
-    {% if c.productimage_set.all %}
-        {% for product_image in c.productimage_set.all %}
-        <br>
+        {% if c.productimage_set.all %}
+            {% for product_image in c.productimage_set.all %}
         <img class="product-image" src="{{ product_image.image.url }}"
-             width="200" height="200" alt= "{{ c.name }}" >
-        <br>
-    </div>
-        {% endfor %}
-    {% endif %}
+             width="200" height="300" alt= "{{ c.name }}" >
+            {% endfor %}
+        {% endif %}
+    </li>
 {% endfor %}
+</ul>
 
 {% endblock %}

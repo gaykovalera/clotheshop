@@ -1,41 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'catalog/catalog_base.html' %}
 {% block content %}
 
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Brand</title>
 </head>
-<style>
-.thumb img {
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-</style>
-<body>
 
+<body>
 
 <ul class="hr">
 {% for c in brands  %}
     {% if c.brandimage_set.all %}
         {% for brand_image in c.brandimage_set.all %}
-        <div>
+        <li>
         <a href="{% url 'catalog:brand_view' c.slug %}">{{ c.name }}</a>
             <br>
         <img class="thumb" src="{{ brand_image.image.url }}" width="450" height="250"
              alt="{{ c.name }}">
-        </div>
+        </li>
         {% endfor %}
     {% endif %}
 {% endfor %}
 
+
 {% endblock %}
-
 </body>
-</html>
-
-
 
 
